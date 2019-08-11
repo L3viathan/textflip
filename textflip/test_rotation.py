@@ -1,6 +1,8 @@
-import pytest
 from unicodedata import normalize
-from rotation import flip
+
+import pytest
+from .rotation import flip
+
 
 @pytest.mark.parametrize(
     ["text"],

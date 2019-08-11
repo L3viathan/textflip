@@ -1,7 +1,7 @@
 from unicodedata import normalize
 import regex
 
-from data import hacky_pairs, dia_pairs, rotations
+from .data import hacky_pairs, dia_pairs, rotations
 
 
 def decompose(text):
@@ -48,7 +48,8 @@ rotation_map = get_rotation_map()
 
 def flip(text):
     return "".join(
-        flop(char) for char in reversed(regex.findall(r"\P{Mn}\p{Mn}*", decompose(text)))
+        flop(char)
+        for char in reversed(regex.findall(r"\P{Mn}\p{Mn}*", decompose(text)))
     )
 
 
