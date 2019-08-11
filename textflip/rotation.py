@@ -1,4 +1,4 @@
-from unicodedata import normalize
+from unicodedata import normalize, name
 import regex
 
 from .data import hacky_pairs, dia_pairs, rotations
@@ -11,12 +11,21 @@ def decompose(text):
     return text
 
 
+def _maybe_westernize(match):
+    # Sadly, i does not decompose into ı and combining dot above.
+    # Therefore, we have to transform ı + diacritics into i + diacritics.
+    # However, if we always do this we end up with double dots if the i is
+    # supposed to be upside-down.
+    diacritic = match.group(1)
+    if name(diacritic).endswith("BELOW"):
+        return "ı{}".format(diacritic)
+    return "i{}".format(diacritic)
+
+
 def compose(text):
     for a, b in hacky_pairs:
         text = text.replace(a, b)
-    # Sadly, i does not decompose into ı and combining dot above
-    # Therefore, we have to transform ı + diacritics into i + diacritics
-    return regex.sub(r"ı(\p{Mn})", r"i\1", text)
+    return regex.sub(r"ı(\p{Mn})", _maybe_westernize, text)
 
 
 def get_dia_map():
