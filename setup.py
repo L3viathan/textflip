@@ -16,4 +16,7 @@ setup(
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",
     ],
+    entry_points={
+        'console_scripts': ['flip=textflip.commandline:flip_cli'],
+    }
 )
