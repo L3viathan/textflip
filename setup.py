@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="textflip",
-    version="0.3.3",
+    version="0.3.4",
     install_requires=[
         "regex",
     ],
